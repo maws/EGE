@@ -1,5 +1,5 @@
 # Eruption Game Engine
-An open source 3d game engine derived from previous versions of GeniEngine (an open souce 2d game engine framework).
+An open source 3d game engine derived from previous versions of GeniEngine (an open source 2d game engine framework).
 
 ## Info
 
