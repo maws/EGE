@@ -3,13 +3,15 @@ An open source 3d game engine derived from previous versions of GeniEngine (an o
 
 ## Info
 
-This is the Eruption Game Engine development repository. It is buggy, unstable, hacked and dirty. EGE is a spiritual successor to the GeniEngine 2 game engine framework.
+This is the Eruption Game Engine development repository. It is buggy, unstable, and dirty until version 1.0 is built. EGE is a spiritual successor to the GeniEngine 2 game engine framework.
 
-## FAQ
+## Version 1.0 progress: **1.8%** (as of 06/09/2015)
 
-* Do you accept pull requests?
+## FAQN
+
+* **Do you accept pull requests?**
 When the project has passed the stage of basically a programmer playground, yes I will review pull requests. Until then, fork and build at your own risk! It may fail, hard.
 
-* Can I use the source from this repository?
-Howsoever I would like to be credited, it is not required.
+* **Can I use the source from this repository?**
+Yes you can. Howsoever I would like to be credited, it is not required.
 [DO WHAT THE FUCK YOU WANT TO](http://www.wtfpl.net/txt/copying/)
