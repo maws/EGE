@@ -77,7 +77,7 @@ namespace EGE
 		glfwSetMouseButtonCallback(window_, glfw_onMouseButton);
 		glfwSetCursorPosCallback(window_, glfw_onMouseMove);
 		glfwSetScrollCallback(window_, glfw_onMouseWheel);
-		glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		gl3wInit();
 

@@ -24,7 +24,29 @@ namespace EGE
 		vmath::mat4 modelMatrix_;
 		float* vertices_;
 		unsigned numVerts_;
+		unsigned numIndices_;
 		GLuint vertexBuffer_;
+		GLuint indexBuffer_;
+
+		struct Mesh
+		{
+			Mesh()
+			{
+				vertices = nullptr;
+				indices = nullptr;
+			}
+
+			~Mesh()
+			{
+				if (vertices) delete vertices;
+				if (indices) delete indices;
+			}
+
+			int numVertices;
+			float* vertices;
+			int numIndices;
+			int* indices;
+		};
 
 	};
 }

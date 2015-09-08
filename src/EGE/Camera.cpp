@@ -26,6 +26,6 @@ namespace EGE
 
 	void Camera::update()
 	{
-		viewMatrix_ = translate<float>(position_) * rotate<float>(rotation_[0], rotation_[1], rotation_[2]);
+		viewMatrix_ = rotate<float>(rotation_[0], rotation_[1], rotation_[2]) * translate<float>(position_);
 	}
 }

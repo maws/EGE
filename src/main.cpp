@@ -3,6 +3,7 @@
 #include <EGE\Shader.hpp>
 #include <EGE\Camera.hpp>
 #include <vmath.h>
+#include <cmath>
 
 class App : public EGE::Application
 {
@@ -33,7 +34,7 @@ protected:
 
 		camera = new EGE::Camera();
 		camera->create(55.0f, windowInfo_.width / windowInfo_.height, 0.1f, 1024.0f);
-		camera->getPosition() = vmath::vec3(0.0f, 0.0f, -10.0f);
+		camera->getPosition() = vmath::vec3(0.0f, 0.0f, -5.0f);
 	}
 
 	virtual void shutdown() override
@@ -43,8 +44,56 @@ protected:
 		delete renderProgram;
 	}
 
+	float oldX = 0.0f;
+	float newX = 0.0f;
+	float oldY = 0.0f;
+	float newY = 0.0f;
+	float changeX = 0.0f;
+	float changeY = 0.0f;
+	virtual void onMouseMove(int x, int y) override
+	{
+		int clamp = 50;
+		// X
+		oldX = newX;
+		newX = x;
+		float deltaX = newX - oldX;
+		if (deltaX > clamp) deltaX = clamp;
+		if (deltaX < -clamp) deltaX = -clamp;
+		// Y
+		oldY = newY;
+		newY = y;
+		float deltaY = newY - oldY;
+		if (deltaY > clamp) deltaY = clamp;
+		if (deltaY < -clamp) deltaY = -clamp;
+
+		camera->getRotation()[0] += deltaY / 10;
+		camera->getRotation()[1] += deltaX / 10;
+	}
+
+	virtual void onKey(int key, int action) override
+	{
+		if (action)
+		{
+			
+		}
+	}
+
 	virtual void render(double time) override
 	{
+		// input
+		if (glfwGetKey(window_, 'W'))
+			camera->getPosition()[2] += 0.05f;
+		if (glfwGetKey(window_, 'A'))
+			camera->getPosition()[1] += 0.05f;
+		if (glfwGetKey(window_, 'S'))
+			camera->getPosition()[2] -= 0.05f;
+		if (glfwGetKey(window_, 'D'))
+			camera->getPosition()[1] -= 0.05f;
+
+		// Position
+		//model->getRotation()[0] += 0.2f;
+		//model->getRotation()[1] += 0.5f;
+
 		// Update transformations
 		camera->update();
 		model->update();
