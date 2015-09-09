@@ -26,8 +26,8 @@ namespace EGE
 		}
 		glLinkProgram(program_);
 
+#ifdef _DEBUG
 		// Check errors
-		// TODO: Disable in release builds
 		GLint status;
 		glGetProgramiv(program_, GL_LINK_STATUS, &status);
 		if (!status)
@@ -39,6 +39,7 @@ namespace EGE
 			glDeleteProgram(program_);
 			return 0;
 		}
+#endif
 
 		for (i = 0; i < count; ++i)
 		{
@@ -68,14 +69,15 @@ namespace EGE
 		delete[] data; // OpenGL has ownership
 		glCompileShader(shader);
 
+#ifdef _DEBUG
 		// Check errors
-		// TODO: Disable in release builds
 		char buffer[4096];
 		glGetShaderInfoLog(shader, 4096, NULL, buffer);
 		OutputDebugStringA(fileName);
 		OutputDebugStringA(":");
 		OutputDebugStringA(buffer);
 		OutputDebugStringA("\n");
+#endif
 
 		return shader;
 	}

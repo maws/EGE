@@ -33,7 +33,7 @@ protected:
 		glUseProgram(renderProgram->getProgram());
 
 		camera = new EGE::Camera();
-		camera->create(55.0f, windowInfo_.width / windowInfo_.height, 0.1f, 1024.0f);
+		camera->create(55.0f, static_cast<float>(windowInfo_.width / windowInfo_.height), 0.1f, 1024.0f);
 		camera->getPosition() = vmath::vec3(0.0f, 0.0f, -5.0f);
 	}
 
@@ -44,43 +44,32 @@ protected:
 		delete renderProgram;
 	}
 
-	float oldX = 0.0f;
-	float newX = 0.0f;
-	float oldY = 0.0f;
-	float newY = 0.0f;
-	float changeX = 0.0f;
-	float changeY = 0.0f;
+	vmath::vec2 oldMouse = vmath::vec2(0, 0);
+	vmath::vec2 newMouse = vmath::vec2(0, 0);
 	virtual void onMouseMove(int x, int y) override
 	{
-		int clamp = 50;
-		// X
-		oldX = newX;
-		newX = x;
-		float deltaX = newX - oldX;
-		if (deltaX > clamp) deltaX = clamp;
-		if (deltaX < -clamp) deltaX = -clamp;
-		// Y
-		oldY = newY;
-		newY = y;
-		float deltaY = newY - oldY;
-		if (deltaY > clamp) deltaY = clamp;
-		if (deltaY < -clamp) deltaY = -clamp;
+		// Calculate position deltas
+		oldMouse = newMouse;
+		newMouse = vmath::vec2(static_cast<float>(x), static_cast<float>(y));
+		vmath::vec2 deltaMouse = newMouse - oldMouse;
 
-		camera->getRotation()[0] += deltaY / 10;
-		camera->getRotation()[1] += deltaX / 10;
+		// Clamp delta to keep away ridiculous values
+		float clamp = 50.0f;
+		vmath::vecN<float, 1> moveX = vmath::clamp<float, 1>(deltaMouse[0], -clamp, clamp);
+		vmath::vecN<float, 1> moveY = vmath::clamp<float, 1>(deltaMouse[1], -clamp, clamp);
+
+		camera->getRotation()[0] += moveY[0] / 10;
+		camera->getRotation()[1] += moveX[0] / 10;
 	}
 
 	virtual void onKey(int key, int action) override
 	{
-		if (action)
-		{
-			
-		}
+		
 	}
 
 	virtual void render(double time) override
 	{
-		// input
+		// Grab basic inputs
 		if (glfwGetKey(window_, 'W'))
 			camera->getPosition()[2] += 0.05f;
 		if (glfwGetKey(window_, 'A'))
@@ -105,15 +94,18 @@ protected:
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Send variables to shader
-		GLuint color = glGetAttribLocation(renderProgram->getProgram(), "color");
+		//GLuint color = glGetAttribLocation(renderProgram->getProgram(), "color");
 		GLuint mvMatrix = glGetUniformLocation(renderProgram->getProgram(), "mvMatrix");
 		GLuint projMatrix = glGetUniformLocation(renderProgram->getProgram(), "projMatrix");
-		glVertexAttrib3fv(color, vmath::vec4(1.0f, .0f, .0f, 1.0f));
+		//glVertexAttrib3fv(color, vmath::vec4(1.0f, .0f, .0f, 1.0f));
 		glUniformMatrix4fv(mvMatrix, 1, false, modelViewMatrix);
 		glUniformMatrix4fv(projMatrix, 1, false, camera->getProjMatrix());
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
+
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
 
 		model->render();
 		
@@ -123,12 +115,12 @@ protected:
 	EGE::Model* model;
 	EGE::RenderProgram* renderProgram;
 	GLuint vertexArray;
-private:
 
 };
 
 int main()
 {
+	// Create and run example application
 	App app;
 	app.run(&app);
 

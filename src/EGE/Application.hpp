@@ -20,21 +20,43 @@ namespace EGE
 		Application();
 		virtual ~Application();
 
+		/// \brief Initialized OpenGL libraries and the window handle
 		virtual void init();
+
+		/// \brief Runs an application in an update/render loop
+		/// \param[in] app The application that you wish to run
 		void run(Application* app);
 
-		virtual void onResize(int w, int h);
-		virtual void onKey(int key, int action);
-		virtual void onMouseButton(int button, int action);
-		virtual void onMouseMove(int x, int y);
-		virtual void onMouseWheel(int pos);
+		/// \brief Called once before each update/render loop
 		virtual void startup();
+
+		/// \brief Called once after each update/render loop
 		virtual void shutdown();
+
+		/// \brief Render call
 		virtual void render(double currentTime);
 
+		/// \brief Resize callback
+		virtual void onResize(int w, int h);
+
+		/// \brief Key callback
+		virtual void onKey(int key, int action);
+
+		/// \brief Mouse button callback
+		virtual void onMouseButton(int button, int action);
+
+		/// \brief Mouse move callback
+		virtual void onMouseMove(int x, int y);
+
+		/// \brief Mouse wheel callback
+		virtual void onMouseWheel(int pos);
+
 		protected:
+
 		static Application* app_;
 
+		// Override glfw callbacks
+		// These callbacks are set up in init()
 		static void glfw_onResize(GLFWwindow* window, int w, int h)
 		{
 			app_->onResize(w, h);
@@ -56,6 +78,7 @@ namespace EGE
 			app_->onMouseWheel(static_cast<int>(yoffset));
 		}
 
+		/// \brief Window info used when creating a glfw window
 		struct WindowInfo
 		{
 			char title[128];
@@ -68,6 +91,8 @@ namespace EGE
 		WindowInfo windowInfo_;
 		GLFWwindow* window_;
 
+		/// \brief Debug message callback
+		/// \todo Multi-platform support
 		virtual void onDebugMessage(GLenum source,
 			GLenum type,
 			GLuint id,

@@ -4,12 +4,15 @@
 #include <vmath.h>
 
 #include <GL\glext.h>
-GL3WglProc sb6GetProcAddress(const char * funcname)
+
+// Get glfw proc
+GL3WglProc GetProcAddress(const char * funcname)
 {
 	return gl3wGetProcAddress(funcname);
 }
 
-int sb6IsExtensionSupported(const char * extname)
+// Check if OpenGL extension is supported
+int IsExtensionSupported(const char * extname)
 {
 	GLint numExtensions;
 	GLint i;
@@ -46,7 +49,11 @@ namespace EGE
 	void Application::init()
 	{
 		// Init glfw
-		int res = glfwInit();
+		if (!glfwInit())
+		{
+			// Something unexpected happen
+			printf("GLFW failed to initialize! \n");
+		}
 
 		// Set window info
 		const char* title = "EGEFramework v0.1";
@@ -91,7 +98,7 @@ namespace EGE
 			glDebugMessageCallback((GLDEBUGPROC)debug_callback, this);
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 		}
-		else if (sb6IsExtensionSupported("GL_ARB_debug_output"))
+		else if (IsExtensionSupported("GL_ARB_debug_output"))
 		{
 			glDebugMessageCallbackARB((GLDEBUGPROC)debug_callback, this);
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
