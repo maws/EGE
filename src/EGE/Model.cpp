@@ -2,15 +2,16 @@
 
 #include <stdio.h>
 
+using namespace gmtl;
 using namespace vmath;
 
 namespace EGE
 {
 	Model::Model()
 		: numVerts_(0)
-		, modelMatrix_(mat4::identity())
-		, position_(vec3(0,0,0))
-		, rotation_(vec3(0, 0, 0))
+		, transformMatrix_(mat4::identity())
+		, position_(0)
+		, rotation_(0)
 	{
 
 	}
@@ -68,11 +69,28 @@ namespace EGE
 
 	void Model::update()
 	{
-		modelMatrix_ = translate<float>(position_) * rotate<float>(rotation_[0], rotation_[1], rotation_[2]);
+		mat4 trans = translate<float>(position_);
+		mat4 rot = rotate<float>(rotation_[0], rotation_[1], rotation_[2]);
+		transformMatrix_ = trans * rot;
 	}
 
-	void Model::render()
+	void Model::render(const Camera& camera, const RenderProgram& program)
 	{
+		mat4 modelViewMatrix = camera.getViewMatrix() * transformMatrix_;
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer_);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glEnableVertexAttribArray(1);
+
+		// Send variables to shader
+		GLuint mvMatrix = glGetUniformLocation(program.getProgram(), "mvMatrix");
+		GLuint projMatrix = glGetUniformLocation(program.getProgram(), "projMatrix");
+		glUniformMatrix4fv(mvMatrix, 1, false, (float*)&modelViewMatrix);
+		glUniformMatrix4fv(projMatrix, 1, false, (float*)&camera.getProjMatrix());
+
 		glDrawArrays(GL_TRIANGLES, 0, numVerts_);
 	}
 }

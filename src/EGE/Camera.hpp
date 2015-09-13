@@ -2,6 +2,7 @@
 
 #include <EGE\Application.hpp>
 #include <vmath.h>
+#include <gmtl\gmtl.h>
 
 namespace EGE
 {
@@ -27,6 +28,9 @@ namespace EGE
 		/// \return vec3 reference rotation
 		vmath::vec3& getRotation() { return rotation_; }
 
+		/// \return const mat4 reference transformation matrix
+		const vmath::mat4& getTransformMatrix() const { return transformMatrix_; }
+
 		/// \return const mat4 reference view matrix
 		const vmath::mat4& getViewMatrix() const { return viewMatrix_; }
 
@@ -36,6 +40,7 @@ namespace EGE
 	private:
 		vmath::vec3 position_;
 		vmath::vec3 rotation_;
+		vmath::mat4 transformMatrix_;
 		vmath::mat4 viewMatrix_;
 		vmath::mat4 projMatrix_;
 

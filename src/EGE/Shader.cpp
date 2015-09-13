@@ -11,7 +11,7 @@ namespace EGE
 
 	RenderProgram::~RenderProgram()
 	{
-
+		glDeleteProgram(renderProgram_);
 	}
 
 	GLuint RenderProgram::create(const GLuint * shaders, int count)
@@ -19,34 +19,34 @@ namespace EGE
 		int i;
 
 		// Create and link program
-		program_ = glCreateProgram();
+		renderProgram_ = glCreateProgram();
 		for (i = 0; i < count; ++i)
 		{
-			glAttachShader(program_, shaders[i]);
+			glAttachShader(renderProgram_, shaders[i]);
 		}
-		glLinkProgram(program_);
+		glLinkProgram(renderProgram_);
 
 #ifdef _DEBUG
 		// Check errors
 		GLint status;
-		glGetProgramiv(program_, GL_LINK_STATUS, &status);
+		glGetProgramiv(renderProgram_, GL_LINK_STATUS, &status);
 		if (!status)
 		{
 			char buffer[4096];
-			glGetProgramInfoLog(program_, 4096, NULL, buffer);
+			glGetProgramInfoLog(renderProgram_, 4096, NULL, buffer);
 			OutputDebugStringA(buffer);
 			OutputDebugStringA("\n");
-			glDeleteProgram(program_);
+			glDeleteProgram(renderProgram_);
 			return 0;
 		}
 #endif
-
+		// Delete shaders
 		for (i = 0; i < count; ++i)
 		{
 			glDeleteShader(shaders[i]);
 		}
 
-		return program_;
+		return renderProgram_;
 	}
 
 	GLuint loadShader(const char* fileName, GLenum shaderType)

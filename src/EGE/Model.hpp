@@ -1,6 +1,9 @@
 #pragma once
 
 #include <EGE\Application.hpp>
+#include <EGE\Camera.hpp>
+#include <EGE\Shader.hpp>
+#include <gmtl\gmtl.h>
 #include <vmath.h>
 
 namespace EGE
@@ -20,7 +23,7 @@ namespace EGE
 		void update();
 
 		/// \brief Renders this model using GL_TRIANGLES
-		void render();
+		void render(const Camera& camera, const RenderProgram& program);
 
 		/// \return vec3 reference position
 		vmath::vec3& getPosition(){ return position_; }
@@ -29,12 +32,12 @@ namespace EGE
 		vmath::vec3& getRotation() { return rotation_; }
 		
 		/// \return const mat4 reference model matrix
-		const vmath::mat4& getModelMatrix() const { return modelMatrix_; }
+		const vmath::mat4& getTransformMatrix() const { return transformMatrix_; }
 
 	private:
 		vmath::vec3 position_;
 		vmath::vec3 rotation_;
-		vmath::mat4 modelMatrix_;
+		vmath::mat4 transformMatrix_;
 		unsigned numVerts_;
 		unsigned numIndices_;
 		GLuint vertexBuffer_;

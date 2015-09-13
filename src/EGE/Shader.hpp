@@ -21,10 +21,10 @@ namespace EGE
 		GLuint create(const GLuint * shaders, int count);
 
 		/// \return GLuint OpenGL render program
-		GLuint getProgram(){ return program_; }
+		const GLuint getProgram() const { return renderProgram_; }
 
 	private:
-		GLuint program_;
+		GLuint renderProgram_;
 
 	};
 }
