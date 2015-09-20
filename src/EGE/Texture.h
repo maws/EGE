@@ -18,5 +18,6 @@ namespace EGE
 
 	private:
 		GLuint texture_;
+		int width_, height_;
 	};
 }
