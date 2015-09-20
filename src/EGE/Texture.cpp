@@ -1,5 +1,7 @@
 #include <EGE\Texture.h>
 
+#include <assert.h>
+
 namespace EGE
 {
 	Texture::Texture()
@@ -26,6 +28,7 @@ namespace EGE
 
 	void Texture::bind(unsigned slot)
 	{
+		assert(slot < GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS && "slot < GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS");
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, texture_);
 	}
