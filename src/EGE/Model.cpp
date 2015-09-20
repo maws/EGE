@@ -42,13 +42,6 @@ namespace EGE
 		fclose(file);
 
 		numVerts_ = importMesh->numVertices;
-		numIndices_ = importMesh->numIndices;
-
-		// Index buffer
-		// NOTE: Not currently used
-		glGenBuffers(1, &indexBuffer_);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer_);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * importMesh->numIndices, importMesh->indices, GL_STATIC_DRAW);
 
 		// Vertex buffer
 		glGenBuffers(1, &vertexBuffer_);
@@ -65,6 +58,35 @@ namespace EGE
 		glEnableVertexAttribArray(1);
 
 		delete importMesh;
+	}
+
+	void Model::create(const float* verts)
+	{
+		numVerts_ = 6;
+		const float colors[] = 
+		{
+			1.0f, 0.0f, 0.0f, 1.0f,
+			1.0f, 0.0f, 0.0f, 1.0f,
+			1.0f, 0.0f, 0.0f, 1.0f,
+
+			0.0f, 1.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 0.0f, 1.0f,
+		};
+
+		// Vertex buffer
+		glGenBuffers(1, &vertexBuffer_);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * numVerts_, verts, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glEnableVertexAttribArray(0);
+
+		// Color buffer
+		glGenBuffers(1, &colorBuffer_);
+		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer_);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * numVerts_, colors, GL_STATIC_DRAW);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glEnableVertexAttribArray(1);
 	}
 
 	void Model::update()

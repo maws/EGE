@@ -19,6 +19,9 @@ namespace EGE
 		/// \remark The model needs to be in e3m format
 		void create(const char* fileName);
 
+		/// \brief Create a model based out of a vertex array
+		void create(const float* verts);
+
 		/// \brief Updates this models transformation matrices
 		void update();
 
@@ -39,10 +42,8 @@ namespace EGE
 		vmath::vec3 rotation_;
 		vmath::mat4 transformMatrix_;
 		unsigned numVerts_;
-		unsigned numIndices_;
 		GLuint vertexBuffer_;
 		GLuint colorBuffer_;
-		GLuint indexBuffer_;
 
 		/// \brief Simple mesh structure used for import/exporting
 		struct Mesh
