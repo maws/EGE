@@ -14,6 +14,8 @@ namespace EGE
 
 		void create(const char* file);
 
+		void bind(unsigned slot);
+
 	private:
 		GLuint texture_;
 	};
