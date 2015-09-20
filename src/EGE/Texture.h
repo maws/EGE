@@ -16,6 +16,9 @@ namespace EGE
 
 		void bind(unsigned slot);
 
+		int getWidth() { return width_; }
+		int getHeight() { return height_; }
+
 	private:
 		GLuint texture_;
 		int width_, height_;
