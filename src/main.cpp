@@ -25,10 +25,26 @@ protected:
 
 		monkeyModel = new EGE::Model;
 		monkeyModel->create("assets/monkey.e3m");
+		monkeyModel->getPosition() = vmath::vec3(0.0f, 200.0f, 0.0f);
 
 		treeModel = new EGE::Model;
 		treeModel->create("assets/tree.e3m");
-		treeModel->getPosition() = vmath::vec3(10.0f, 0.0f, 200.0f);
+		treeModel->getPosition() = vmath::vec3(10.0f, 200.0f, 200.0f);
+
+		float scale = 1000.0f;
+		float terrainVerts[] = 
+		{
+			-scale,	0.0f, scale,
+			scale,	0.0f, scale,
+			-scale,	0.0f, -scale,
+
+			-scale, 0.0f, -scale,
+			scale,	0.0f, scale, 
+			scale,	0.0f, -scale
+			
+		};
+		terrainModel = new EGE::Model;
+		terrainModel->create(terrainVerts);
 
 		GLuint vertexShader = EGE::loadShader("assets/vertex_shader.gl", GL_VERTEX_SHADER);
 		GLuint fragmentShader = EGE::loadShader("assets/fragment_shader.gl", GL_FRAGMENT_SHADER);
@@ -44,6 +60,7 @@ protected:
 	virtual void shutdown() override
 	{
 		delete camera;
+		delete terrainModel;
 		delete monkeyModel;
 		delete treeModel;
 		delete renderProgram;
@@ -78,13 +95,13 @@ protected:
 		vmath::vec3 at = vmath::vec3(camera->getTransformMatrix()[2][0], camera->getTransformMatrix()[2][1], camera->getTransformMatrix()[2][2]);
 		vmath::vec3 left = vmath::vec3(camera->getTransformMatrix()[0][0], camera->getTransformMatrix()[0][1], camera->getTransformMatrix()[0][2]);
 		if (glfwGetKey(window_, 'W'))
-			camera->getPosition() += at;
+			camera->getPosition() += at * 3;
 		if (glfwGetKey(window_, 'A'))
-			camera->getPosition() += left;
+			camera->getPosition() += left * 3;
 		if (glfwGetKey(window_, 'S'))
-			camera->getPosition() -= at;
+			camera->getPosition() -= at * 3;
 		if (glfwGetKey(window_, 'D'))
-			camera->getPosition() -= left;
+			camera->getPosition() -= left * 3;
 
 		// Position
 		monkeyModel->getRotation()[0] += 0.2f;
@@ -113,10 +130,12 @@ protected:
 
 		monkeyModel->render(*camera, *renderProgram);
 		treeModel->render(*camera, *renderProgram);
+		terrainModel->render(*camera, *renderProgram);
 		
 	}
 
 	EGE::Camera* camera;
+	EGE::Model* terrainModel;
 	EGE::Model* monkeyModel;
 	EGE::Model* treeModel;
 	EGE::RenderProgram* renderProgram;
