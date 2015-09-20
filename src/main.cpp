@@ -2,6 +2,7 @@
 #include <EGE\Model.hpp>
 #include <EGE\Shader.hpp>
 #include <EGE\Camera.hpp>
+#include <EGE\Texture.h>
 #include <vmath.h>
 #include <gmtl\gmtl.h>
 #include <cmath>
@@ -55,6 +56,9 @@ protected:
 
 		camera = new EGE::Camera();
 		camera->create(55.0f, static_cast<float>(windowInfo_.width / windowInfo_.height), 0.1f, 1024.0f);
+
+		texture = new EGE::Texture();
+		texture->create("assets/test.png");
 	}
 
 	virtual void shutdown() override
@@ -63,6 +67,7 @@ protected:
 		delete terrainModel;
 		delete monkeyModel;
 		delete treeModel;
+		delete texture;
 		delete renderProgram;
 	}
 
@@ -138,6 +143,7 @@ protected:
 	EGE::Model* terrainModel;
 	EGE::Model* monkeyModel;
 	EGE::Model* treeModel;
+	EGE::Texture* texture;
 	EGE::RenderProgram* renderProgram;
 	GLuint vertexArray;
 
