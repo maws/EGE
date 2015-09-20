@@ -2,6 +2,7 @@
 
 #define STD_IMAGE_IMPLEMENTATION
 #include <stb\stb_image.h>
+#include <EGE\Application.hpp>
 
 namespace EGE
 {
@@ -11,7 +12,9 @@ namespace EGE
 		Texture();
 		~Texture();
 
-	private:
+		void create(const char* file);
 
+	private:
+		GLuint texture_;
 	};
 }
