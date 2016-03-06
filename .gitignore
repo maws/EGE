@@ -219,3 +219,11 @@ FakesAssemblies/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
+
+# Additional ignores since we use cmake
+*.vcxproj
+*.filters
+*.sln
+*.cmake
+CMakeCache.txt
+CMakeFiles

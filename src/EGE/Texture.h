@@ -13,14 +13,13 @@ namespace EGE
 		~Texture();
 
 		void create(const char* file);
-
 		void bind(unsigned slot);
-
-		int getWidth() { return width_; }
-		int getHeight() { return height_; }
+		int getWidth() { return m_width; }
+		int getHeight() { return m_height; }
 
 	private:
-		GLuint texture_;
-		int width_, height_;
+		GLuint m_texture;
+		int m_width;
+		int m_height;
 	};
 }
