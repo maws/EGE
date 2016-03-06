@@ -5,8 +5,6 @@ An open source 3d game engine derived from previous versions of GeniEngine (an o
 
 This is the Eruption Game Engine development repository. It is buggy, unstable, and dirty until version 1.0 is built. EGE is a spiritual successor to the GeniEngine 2 game engine framework.
 
-### Version 1.0 progress: **1.8%** (as of 06/09/2015)
-
 ## FAQ
 
 * **Do you accept pull requests?**
