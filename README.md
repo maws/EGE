@@ -11,5 +11,5 @@ This is the Eruption Game Engine development repository. It is buggy, unstable, 
 When the project has passed the stage of basically a programmer playground, yes I will review pull requests. Until then, fork and build at your own risk! It may fail, hard.
 
 * **Can I use the source from this repository?**
-Yes you can. Howsoever I would like to be credited, it is not required.
+Yes you can. Howsoever I would like to be credited, but it is not required.
 [DO WHAT THE FUCK YOU WANT TO](http://www.wtfpl.net/txt/copying/)
